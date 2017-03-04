@@ -1,0 +1,23 @@
+{
+  "name": "kudm761/martinez-rueda-php",
+  "description": "Martinez-Rueda algorithm for polygon boolean operations",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Dmitry Kubitsky",
+      "email": "kudm761@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "MartinezRueda\\": "src/"
+    }
+  }
+}
