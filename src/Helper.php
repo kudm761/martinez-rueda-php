@@ -120,6 +120,6 @@ class Helper
         }
 
         // remove last element
-        unset($array[$size - 1]);
+        array_pop($array);
     }
 }
