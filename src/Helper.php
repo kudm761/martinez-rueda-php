@@ -94,6 +94,13 @@ class Helper
         return self::compareSweepEvents($event1, $event2);
     }
 
+    /**
+     * Remove $index element and maintain indexing.
+     *
+     * @param array $array
+     * @param int $index
+     * @return void
+     */
     public static function removeElementWithShift(array &$array, int $index)
     {
         if (!isset($array[$index])) {
@@ -101,25 +108,9 @@ class Helper
             throw new \InvalidArgumentException($message);
         }
 
-        $size = sizeof($array);
+        unset($array[$index]);
+        $array = array_values($array);
 
-        if ($size == 0) {
-            return;
-        }
-
-        // last element or array of single element
-        if ($index == $size - 1) {
-            // to reduce internal hash-table index
-            array_pop($array);
-            return;
-        }
-
-        // first element or somewhere in the middle
-        for ($i = $index; $i < $size - 1; $i++) {
-            $array[$i] = $array[$i + 1];
-        }
-
-        // remove last element
-        array_pop($array);
+        return;
     }
 }

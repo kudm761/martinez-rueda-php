@@ -150,6 +150,7 @@ class Algorithm
 
         $connector = new Connector();
         $sweepline = new SweepLine();
+
         $min_max_x = min($maxsubj->x, $maxclip->x);
 
         Debug::debug(
@@ -485,7 +486,8 @@ class Algorithm
             return;
         }
 
-        // the algorithm does not work for polygons with self-intersections
+        // the line segments overlap, but they belong to the same polygon
+        // the program does not work with this kind of polygon
         if ($intersections == 2 && $event1->polygon_type == $event2->polygon_type) {
             throw new \Exception('Polygon has overlapping edges.');
         }
@@ -596,9 +598,9 @@ class Algorithm
             $left->is_left = false;
         }
 
-        if (Helper::compareSweepEvents($event, $right)) {
+        //if (Helper::compareSweepEvents($event, $right)) {
             // nothing
-        }
+        //}
 
         $event->other->other = $left;
         $event->other = $right;
@@ -636,39 +638,4 @@ class Algorithm
         $this->eq->enqueue($e1);
         $this->eq->enqueue($e2);
     }
-
-    /*public static function compareSweepEvents(SweepEvent $event1, SweepEvent $event2) : bool
-    {
-        if ($event1->p->x != $event2->p->x) {
-            return $event1->p->x > $event2->p->x;
-        }
-
-        if ($event1->p->y != $event2->p->y) {
-            return $event1->p->y > $event2->p->y;
-        }
-
-        if ($event1->is_left != $event2->is_left) {
-            return $event1->is_left;
-        }
-
-        return $event1->above($event2->other->p);
-
-        if ($event1->p->x > $event2->p->x) {
-            return true;
-        }
-
-        if ($event2->p->x > $event1->p->x) {
-            return false;
-        }
-
-        if (!$event1->p->equalsTo($event2->p)) {
-            return $event1->p->y > $event2->p->y;
-        }
-
-        if ($event1->is_left != $event2->is_left) {
-            return $event1->is_left;
-        }
-
-        return $event1->above($event2->other->p);
-    }*/
 }

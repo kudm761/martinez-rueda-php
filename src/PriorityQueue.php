@@ -82,9 +82,8 @@ class PriorityQueue
             }
         );
 
-        // we should actualize indexes, because of hash-table nature
-        // there is trade-off between O(1) access time and memory overhead
-        // and O(n) access time and array pointers
+        // We should actualize indexes, because of hash-table nature.
+        // array_values() is faster than juggling with indexes.
         $this->events = array_values($this->events);
     }
 
