@@ -58,8 +58,8 @@ class PointChain
      */
     public function linkSegment(Segment $segment)
     {
-        $front = reset($this->segments);
-        $back = end($this->segments);
+        $front = $this->begin();
+        $back = $this->end();
 
         if ($segment->begin()->equalsTo($front)) {
             if ($segment->end()->equalsTo($back)) {
@@ -110,52 +110,47 @@ class PointChain
      */
     public function linkChain(PointChain &$other)
     {
-        $front = $this->segments[0];
-        $back = $this->segments[sizeof($this->segments) - 1];
+        $front = $this->begin();
+        $back = $this->end();
 
-        $other_front = $other->segments[0];
-        $other_back = $other->segments[sizeof($other->segments) - 1];
+        $other_front = $other->begin();
+        $other_back = $other->end();
 
         if ($other_front->equalsTo($back)) {
-            $append = $other->segments;
-            array_shift($append);
+            array_shift($other->segments);
 
-            $this->segments = array_merge($this->segments, $append);
-
-            $other->segments[] = new Point();
+            // insert at the end of $this->segments
+            $this->segments = array_merge($this->segments, $other->segments);
 
             return true;
         }
 
         if ($other_back->equalsTo($front)) {
-            $append = $this->segments;
-            array_shift($append);
+            array_shift($this->segments);
 
-            $other->segments = array_merge($other->segments, $append);
-
-            $other->segments[] = new Point();
+            // insert at the beginning of $this->segments
+            $this->segments = array_merge($other->segments, $this->segments);
 
             return true;
         }
 
         if ($other_front->equalsTo($front)) {
-            $append = $this->segments;
-            array_shift($append);
+            array_shift($this->segments);
 
-            $this->segments = array_merge(array_reverse($other->segments), $append);
-
-            $other->segments[] = new Point();
+            $other->segments = array_reverse($other->segments);
+            // insert reversed at the beginning of $this->segments
+            $this->segments = array_merge($other->segments, $this->segments);
 
             return true;
         }
 
         if ($other_back->equalsTo($back)) {
-            $append = $this->segments;
-            array_pop($append);
+            array_pop($this->segments);
 
-            $this->segments = array_merge($append, array_reverse($other->segments));
+            $other->segments = array_reverse($other->segments);
 
-            $other->segments[] = new Point();
+            // insert reversed at the end of $this->segments
+            $this->segments = array_merge($this->segments, $other->segments);
 
             return true;
         }
