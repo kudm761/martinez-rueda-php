@@ -31,7 +31,7 @@ class PriorityQueue
      */
     public function isEmpty() : bool
     {
-        return $this->size() <= 0;
+        return empty($this->events);
     }
 
     /**

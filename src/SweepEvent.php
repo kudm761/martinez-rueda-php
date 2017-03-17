@@ -66,6 +66,10 @@ class SweepEvent
      */
     public $id = 0;
 
+    /**
+     * @deprecated
+     * @var null
+     */
     public $pos = null; // in s
 
     /**
@@ -136,7 +140,7 @@ class SweepEvent
      */
     public function equalsTo(SweepEvent $event) : bool
     {
-        return $this->getId() == $event->getId();
+        return $this->getId() === $event->getId();
     }
 
     /**

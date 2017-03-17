@@ -28,7 +28,7 @@ class Point
      */
     public function equalsTo(Point $p) : bool
     {
-        return ($this->x == $p->x && $this->y == $p->y);
+        return ($this->x === $p->x && $this->y === $p->y);
     }
 
     /**
