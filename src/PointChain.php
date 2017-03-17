@@ -108,7 +108,7 @@ class PointChain
      * @param PointChain $other
      * @return bool
      */
-    public function linkChain(PointChain &$other)
+    public function linkChain(PointChain $other)
     {
         $front = $this->begin();
         $back = $this->end();

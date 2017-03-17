@@ -409,7 +409,7 @@ class Algorithm
         $smin = min($s0, $s1);
         $smax = max($s0, $s1);
 
-        $w = []; // 2
+        $w = [];
         $imax = $this->findIntersection2(0.0, 1.0, $smin, $smax, $w);
 
         if ($imax > 0) {
@@ -439,7 +439,15 @@ class Algorithm
         return $imax;
     }
 
-    protected function findIntersection2(float $u0, float $u1, float $v0, float $v1, &$w) : int
+    /**
+     * @param float $u0
+     * @param float $u1
+     * @param float $v0
+     * @param float $v1
+     * @param array $w
+     * @return int
+     */
+    protected function findIntersection2(float $u0, float $u1, float $v0, float $v1, array &$w) : int
     {
         if ($u1 < $v0 || $u0 > $v1) {
             return 0;

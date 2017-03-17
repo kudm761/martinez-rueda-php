@@ -29,7 +29,7 @@ class Connector
         $size = sizeof($this->open_polygons);
 
         for ($j = 0; $j < $size; $j++) {
-            $chain = &$this->open_polygons[$j];
+            $chain = $this->open_polygons[$j];
 
             if (!$chain->linkSegment($segment)) {
                 continue;
@@ -53,7 +53,7 @@ class Connector
             $k = sizeof($this->open_polygons);
 
             for ($i = $j + 1; $i < $k; $i++) {
-                $v = &$this->open_polygons[$i];
+                $v = $this->open_polygons[$i];
 
                 if ($chain->linkChain($v)) {
                     Helper::removeElementWithShift($this->open_polygons, $i);
