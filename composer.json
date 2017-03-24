@@ -1,7 +1,8 @@
 {
   "name": "kudm761/martinez-rueda-php",
   "description": "Martinez-Rueda algorithm for polygon boolean operations",
-  "keywords": ["polygon clipping", "geography", "martinez-rueda algorithm"],
+  "keywords": ["polygon clipping", "polygon boolean operations", "polygon union", "polygon intersection",
+    "polygon difference", "polygon xor", "geography", "martinez polygon algorithm", "martinez php"],
   "type": "library",
   "authors": [
     {
