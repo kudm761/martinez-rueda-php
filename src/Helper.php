@@ -113,4 +113,76 @@ class Helper
 
         return;
     }
+
+    /**
+     * @param array $expected_multipolygon
+     * @param array $tested_multipolygon
+     * @return int
+     */
+    public static function compareMultiPolygons(array $expected_multipolygon, array $tested_multipolygon) : array
+    {
+        if (sizeof($expected_multipolygon) != sizeof($tested_multipolygon)) {
+            return ['success' => false, 'reason' => 'different count of polygons'];
+        }
+
+        if (sizeof($expected_multipolygon) == 0 && sizeof($tested_multipolygon) == 0) {
+            return ['success' => true, 'reason' => ''];
+        }
+
+        for ($i = 0; $i < sizeof($expected_multipolygon); $i++) {
+            $expected_polygon = $expected_multipolygon[$i];
+
+            if (!isset($tested_multipolygon[$i])) {
+                return [
+                    'success' => false,
+                    'reason' => sprintf('Tested multipolygon has not polygon with index: `%s`, check indexation', $i),
+                ];
+            }
+
+            $tested_polygon = $tested_multipolygon[$i];
+
+            // walk through the points
+            for ($j = 0, $size = sizeof($expected_polygon); $j < $size; $j++) {
+                if (!isset($tested_polygon[$j])) {
+                    return [
+                        'success' => false,
+                        'reason' => sprintf(
+                            'Tested polygon with index: `%d` has not point with index: `%d`, check indexation',
+                            $i,
+                            $j
+                        ),
+                    ];
+                }
+
+                $expected_point = $expected_polygon[$j];
+                $tested_point = $tested_polygon[$j];
+
+                if (bccomp($expected_point[0], $tested_point[0], 6) !== 0) {
+                    return [
+                        'success' => false,
+                        'reason' => sprintf(
+                            'X coordinates of points are not equal: expected `%f` but `%s` given at index %d',
+                            $expected_point[0],
+                            $tested_point[0],
+                            $j
+                        )
+                    ];
+                }
+
+                if (bccomp($expected_point[1], $tested_point[1], 6) !== 0) {
+                    return [
+                        'success' => false,
+                        'reason' => sprintf(
+                            'Y coordinates of points are not equal: expected `%f` but `%s` given at index %d',
+                            $expected_point[1],
+                            $tested_point[1],
+                            $j
+                        )
+                    ];
+                }
+            }
+        }
+
+        return ['success' => true, 'reason' => ''];
+    }
 }
