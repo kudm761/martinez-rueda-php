@@ -12,7 +12,7 @@ class AlgorithmUnionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test simple union of two intersected polygons
+     * Test simple union result of two intersected polygons.
      *
      * @link https://gist.github.com/kudm761/944eb9bbbd088e69f87421a1afa7218b
      */
@@ -54,6 +54,9 @@ class AlgorithmUnionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test simple union result of two intersected polygons
+     * with a hole between them.
+     *
      * https://gist.github.com/kudm761/5b566e98698e8f8cdf2fe7cfdab04b58
      */
     public function testSimpleCaseWithHole()
