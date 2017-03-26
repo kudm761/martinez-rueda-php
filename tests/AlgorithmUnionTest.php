@@ -52,4 +52,37 @@ class AlgorithmUnionTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue($compare['success'], $compare['reason']);
     }
+
+    /**
+     * https://gist.github.com/kudm761/5b566e98698e8f8cdf2fe7cfdab04b58
+     */
+    public function testSimpleCaseWithHole()
+    {
+        $data = [[[-4.1748046875, 75.52464464250062], [-6.701660156249999, 75.52464464250062], [-6.74560546875, 74.44346576284508], [-3.75732421875, 74.44935750063425], [-3.7353515625, 74.76429887097666], [-4.8779296875, 74.76718570583334], [-4.866943359375, 75.30331101068566], [-3.8452148437499996, 75.30331101068566], [-3.8452148437499996, 75.52464464250062], [-4.1748046875, 75.52464464250062]]];
+        $subject = new \MartinezRueda\Polygon($data);
+
+        $data = [[[-4.383544921875, 75.59587329063447], [-4.427490234375, 74.36371391783985], [-2.6806640625, 74.36667478672423], [-2.65869140625, 75.59860599198842], [-4.383544921875, 75.59587329063447]]];
+        $clipping = new \MartinezRueda\Polygon($data);
+
+        $result = $this->implementation->getUnion($subject, $clipping);
+        $tested = $result->toArray();
+
+        $this->assertNotEmpty($tested, 'Union result of two polygons is empty, array of arrays of points is expected.');
+
+        // correct result
+        $expected = [
+            [[-4.866943359375, 75.303311010686], [-4.8779296875, 74.767185705833], [-4.4131421817925, 74.766011374956], [-4.3939792383295, 75.303311010686], [-4.866943359375, 75.303311010686]],
+            [[-4.383544921875, 75.595873290634], [-4.386085311755, 75.524644642501], [-6.70166015625, 75.524644642501], [-6.74560546875, 74.443465762845], [-4.424482645139, 74.448042121598], [-4.427490234375, 74.36371391784], [-2.6806640625, 74.366674786724], [-2.65869140625, 75.598605991988], [-4.383544921875, 75.595873290634]]
+        ];
+
+        $this->assertEquals(
+            sizeof($tested),
+            sizeof($expected),
+            sprintf('Result multipolygon should contain two polygons, but contains %d', sizeof($tested))
+        );
+
+        $compare = Helper::compareMultiPolygons($expected, $tested);
+
+        $this->assertTrue($compare['success'], $compare['reason']);
+    }
 }
