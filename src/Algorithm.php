@@ -126,7 +126,7 @@ class Algorithm
                 $result = $subject;
 
                 for ($i = 0; $i < $clipping->ncontours(); $i++) {
-                    $result[] = $clipping->contour($i);
+                    $result->push_back($clipping->contour($i));
                 }
             }
 
